@@ -5,9 +5,9 @@
   tasks:
   - name: Add no-subscription repository to sources list
     apt:
-      name: "deb http://download.proxmox.com/debian {{ ansible_distribution_release }}/pve no-subscription"
+      name: "deb http://download.proxmox.com/debian bookworm pve-no-subscription"
       state: present
-      file: /etc/apt/sources.list.d/pve-no-subscription.list
+      file: /etc/apt/sources.list
     
   - name: Update apt cache
     apt:
