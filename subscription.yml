@@ -1,13 +1,17 @@
-- name: Add Proxmox no-subscription repository
-  hosts: production
-  become: yes
-  tasks:
-  - name: Add no-subscription repository to sources list
-    apt:
-      name: "deb http://download.proxmox.com/debian bookworm pve-no-subscription"
-      state: present
-      file: /etc/apt/sources.list
-    
-  - name: Update apt cache
-    apt:
-      update_cache: yes
+- name: Check if Enterprise repo exists
+  become: true
+  ansible.builtin.stat:
+    path=/etc/apt/sources.list.d/pve-enterprise.list
+  register: pve_enterprise_repo
+
+- name: Disable Enterprise Repo if enabled
+  become: true
+  when: pve_enterprise_repo.stat.exists
+  command: mv /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.disabled
+
+- name: Add the no-subscription repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "{{ no_subscription_repo }}"
+    filename: proxmox-no-subscription
+    state: present
