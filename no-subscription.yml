@@ -1,6 +1,6 @@
 ---
 - name: Add Proxmox no-subscription repository
-  hosts: proxmox_servers
+  hosts: production
   become: yes
   tasks:
   - name: Add no-subscription repository to sources list
