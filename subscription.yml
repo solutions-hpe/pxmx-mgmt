@@ -1,4 +1,3 @@
----
 - name: Add Proxmox no-subscription repository
   hosts: production
   become: yes
