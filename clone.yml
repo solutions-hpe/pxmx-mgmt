@@ -1,1 +1,19 @@
+---
+- name: Clone VM and rename
+  hosts: localhost
+  vars_files:
+    - ~/articles/proxmox # Reference the encrypted vault file directly
 
+  tasks:
+    - name: Clone VM
+      community.general.proxmox_kvm:
+        api_host: "{{ api_host }}"        # Replace with your Proxmox server IP
+        api_user: "{{ api_user }}"   # Variables are now accessible directly
+        api_password: "{{ api_password }}"   # from the vaul
+        node: "{{ node }}"                      # Replace with the specific node name in Proxmox
+        vmid: "{{ vmid }}"                             # ID of the VM to clone
+        clone: "{{ clone-name }}"                        # Name for the cloned VM
+        name: NewVM 
+        pool: "{{ pool }}"                  # Name of the pool to place the VM in
+        full: "{{ mode }}"                           # Set to true for a full clone
+      delegate_to: localhost
