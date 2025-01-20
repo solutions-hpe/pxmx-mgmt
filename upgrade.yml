@@ -1,4 +1,4 @@
-- hosts: proxmox_servers
+- hosts: production
   become: true
   tasks:
   - name: Update and upgrade apt packages
