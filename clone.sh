@@ -1,5 +1,5 @@
 #!/bin/bash
-#version=".03"
+version=".04"
 #--------------------------------------------------------------------------------------------------------------
 #Variable Setup - Reading arguments passed to script
 command="$1"
@@ -62,8 +62,10 @@ if [[ $command == "config" ]]; then
      qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
      echo Renaming $i to $vm_name-$i
      qm guest exec $i hostname $vm_name-$i
-     qm guest exec $1 rm /usr/local/scripts/vhcached.txt
-     qm guest exec $1 /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
+     qm guest exec $i rm /usr/local/scripts/vhcached.txt
+     qm guest exec $i /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
+     qm guest exec $i curl https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh | sh
+     sleep 300
      echo Rebooting $i
      qm guest exec $i reboot now
     done
