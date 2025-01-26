@@ -4,4 +4,4 @@
   become: true
   tasks:
     - name: Clone VMs
-      ansible.builtin.shell: bash /etc/pve/scripts/clone.sh
+      ansible.builtin.shell: bash /etc/pve/scripts/clone.sh "command"
