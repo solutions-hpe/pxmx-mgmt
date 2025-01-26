@@ -3,4 +3,4 @@
   become: true
   tasks:
   - name: Clone VMs
-    ansible.builtin.shell: bash /etc/pve/scripts/clone.sh $command $start_vmid $end_vmid $vlan_id $bridge_id $sleep_time $pool_id $vm_name $tpl_id
+    ansible.builtin.shell: bash /etc/pve/scripts/clone.sh {{ command }} {{ start_vmid }} {{ end_vmid }} {{ vlan_id }} {{ bridge_id }} {{ sleep_time }} {{ pool_id }} {{ vm_name }} {{ tpl_id }}
