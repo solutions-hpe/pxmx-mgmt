@@ -1,0 +1,6 @@
+---
+- hosts: production
+  become: true
+  tasks:
+  - name: Exit Maintenance Mode on Proxmox Cluster
+    ansible.builtin.shell: ha-manager crm-command node-maintenance disable {{ansible_hostname}}
