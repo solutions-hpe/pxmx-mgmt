@@ -32,9 +32,9 @@ if [[ $command == "re-create" ]]; then
     do
      echo Renaming $i to $vm_name-$i
      qm guest exec $i hostname $vm_name-$i
-     qm guest exec $i rm /usr/local/scripts/vhcached.txt
-     qm guest exec $i /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
-     qm guest exec $i curl https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh | sh
+     qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
+     qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
+     qm guest exec $i sudo curl https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh | sh
      echo Configuring $i Network
      qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
     done
@@ -64,9 +64,9 @@ if [[ $command == "config" ]]; then
     do
      echo Renaming $i to $vm_name-$i
      qm guest exec $i hostname $vm_name-$i
-     qm guest exec $i rm /usr/local/scripts/vhcached.txt
-     qm guest exec $i /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
-     qm guest exec $i curl https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh | sh
+     qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
+     qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
+     qm guest exec $i sudo curl https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh | sh
      echo Configuring $i Network
      qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
     done
