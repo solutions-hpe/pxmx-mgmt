@@ -1,6 +1,6 @@
 ---
 - name: Clone VM and rename
-  hosts: Production
+  hosts: production
   become: true
   tasks:
     - name: Clone VMs
