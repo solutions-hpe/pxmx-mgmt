@@ -1,18 +1,16 @@
 ---
-- name: Check if Enterprise repo exists
-  become: true
-  ansible.builtin.stat:
-    path=/etc/apt/sources.list.d/pve-enterprise.list
-  register: pve_enterprise_repo
+- name: Remove Proxmox Enterprise repository
+  apt_repository:
+    repo: 'deb https://enterprise.proxmox.com/debian buster pve-enterprise'
+    state: absent
 
-- name: Disable Enterprise Repo if enabled
-  become: true
-  when: pve_enterprise_repo.stat.exists
-  command: mv /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.disabled
 
-- name: Add the no-subscription repository
-  become: true
-  ansible.builtin.apt_repository:
-    repo: "{{ no_subscription_repo }}"
-    filename: proxmox-no-subscription
+- name: Use Proxmox free repository
+  apt_repository:
+    repo: 'deb http://download.proxmox.com/debian/pve buster pve-no-subscription'
     state: present
+
+- name: Update APT package cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 7200
