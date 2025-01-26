@@ -1,5 +1,5 @@
 ---
-- hosts: production
+- hosts: primary
   become: true
   tasks:
   - name: Exit Maintenance Mode on Proxmox Cluster
