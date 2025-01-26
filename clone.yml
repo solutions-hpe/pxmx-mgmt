@@ -1,4 +1,6 @@
 ---
+- hosts: production
+  become: true
 - name: Clone Setup Script
   tasks:
     - name: Clone VMs
