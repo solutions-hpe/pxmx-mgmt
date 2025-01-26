@@ -3,4 +3,4 @@
   become: true
   tasks:
   - name: Exit Maintenance Mode on Proxmox Cluster
-    ansible.builtin.shell: ha-manager crm-command node-maintenance enable {{ansible_hostname}}
+    ansible.builtin.shell: wget -4 https://raw.githubusercontent.com/solutions-hpe/client-sim/main/clone.sh -O /etc/pve/scripts/clone.sh
