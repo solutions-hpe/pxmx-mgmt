@@ -5,21 +5,3 @@
     apt:
       upgrade: yes
       update_cache: yes
-- name: Ensure that prerequisites are installed.
-  apt:
-    name: "{{ packages }}"
-    state: present
-  vars:
-    packages:
-    - unzip
-    - python3-pip
-
-- name: Ensure that python packages are installed
-  pip:
-    name: "{{ packages }}"
-    executable: pip3
-  vars:
-    packages:
-    - ansible
-    - py-bcrypt
-    - j2cli[yaml]
