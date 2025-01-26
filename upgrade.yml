@@ -1,6 +1,8 @@
 - hosts: production
   become: true
   tasks:
+  - name: Install python3 to support Ansible modules
+    ansible.builtin.shell: apt install python3 -y
   - name: Update and upgrade apt packages
     apt:
       upgrade: yes
