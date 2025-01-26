@@ -1,3 +1,6 @@
-
-- name: Enter Maintenance Mode on Proxmox Cluster
-  ansible.builtin.shell: ha-manager crm-command node-maintenance enable {{ansible_hostname}}
+---
+- hosts: production
+  become: true
+  tasks:
+  - name: Enter Maintenance Mode on Proxmox Cluster
+    ansible.builtin.shell: ha-manager crm-command node-maintenance enable {{ansible_hostname}}
