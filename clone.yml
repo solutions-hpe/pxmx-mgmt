@@ -1,7 +1,5 @@
 ---
 - name: Clone VM and rename
-  hosts: 100.127.1.53
-  become: true
   tasks:
     - name: Clone VMs
       ansible.builtin.shell: bash /etc/pve/scripts/clone.sh
