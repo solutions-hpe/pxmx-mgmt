@@ -23,8 +23,6 @@ if [[ $command == "re-create" ]]; then
      qm destroy $i --skiplock --purge --destroy-unreferenced-disks
      echo Cloning $tpl_id to $i
      qm clone $tpl_id $i --name $vm_name-$i --pool $pool_id
-     echo Configuring $i Network
-     qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
      echo Starting $i
      qm start $i
      sleep $sleep_time
@@ -39,6 +37,8 @@ if [[ $command == "re-create" ]]; then
      qm guest exec $i curl https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh | sh
      echo Rebooting $i
      qm guest exec $i reboot now
+     echo Configuring $i Network
+     qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
      sleep $sleep_time
     done
 fi
