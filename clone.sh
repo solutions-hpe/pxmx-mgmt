@@ -1,5 +1,5 @@
 #!/bin/bash
-#version=".01"
+#version=".02"
 #--------------------------------------------------------------------------------------------------------------
 #Variable Setup - Reading arguments passed to script
 command="$1"
@@ -14,9 +14,8 @@ tpl_id="$9"
 #--------------------------------------------------------------------------------------------------------------
 #Re-Create VMS - Delete, re-clone from template
 #Delete and Re-Create the VMs
-if [ $command == "re-create" ] 
-  then
-    for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
+if [ $command == "re-create" ]; then
+  for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo stopping $i
      qm stop $i
@@ -31,7 +30,7 @@ if [ $command == "re-create" ]
      sleep $sleep_time
     done
 #Configuring VM Clones
-    for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
+  for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo Renaming $i to $vm_name-$i
      qm guest exec $i hostname $vm_name-$i
@@ -45,8 +44,7 @@ if [ $command == "re-create" ]
 fi
 #--------------------------------------------------------------------------------------------------------------
 #Delete Option - delete all the VMs and cleanup disks
-if [ $command == "delete" ]
-  then
+if [ $command == "delete" ]; then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo stopping $i
@@ -57,8 +55,7 @@ if [ $command == "delete" ]
 fi
 #--------------------------------------------------------------------------------------------------------------
 #Reconfigure VMs - reset the network interface settings, hostname, and clear out VH caches
-if [ $command == "config" ]
-  then
+if [ $command == "config" ]; then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo Configuring $i Network
@@ -72,4 +69,3 @@ if [ $command == "config" ]
     done
 fi
 #--------------------------------------------------------------------------------------------------------------
-
