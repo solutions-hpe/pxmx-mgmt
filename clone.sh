@@ -13,7 +13,7 @@ tpl_id="$9"
 #--------------------------------------------------------------------------------------------------------------
 #Re-Create VMS - Delete, re-clone from template
 #Delete and Re-Create the VMs
-if [ $commnad == "re-create" ] 
+if [ $command == "re-create" ] 
   then
     for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
@@ -44,7 +44,7 @@ if [ $commnad == "re-create" ]
 fi
 #--------------------------------------------------------------------------------------------------------------
 #Delete Option - delete all the VMs and cleanup disks
-if [ $commnad == "delete" ]
+if [ $command == "delete" ]
   then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
@@ -56,7 +56,7 @@ if [ $commnad == "delete" ]
 fi
 #--------------------------------------------------------------------------------------------------------------
 #Reconfigure VMs - reset the network interface settings, hostname, and clear out VH caches
-if [ $commnad == "config" ]
+if [ $command == "config" ]
   then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
