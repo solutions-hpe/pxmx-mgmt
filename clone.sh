@@ -1,5 +1,5 @@
 #!/bin/bash
-version=".04"
+version=".05"
 #--------------------------------------------------------------------------------------------------------------
 #Variable Setup - Reading arguments passed to script
 command="$1"
@@ -27,7 +27,7 @@ if [[ $command == "re-create" ]]; then
      qm start $i
      sleep $sleep_time
     done
-#Configuring VM Clones
+  #Configuring VM Clones
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo Renaming $i to $vm_name-$i
@@ -35,11 +35,15 @@ if [[ $command == "re-create" ]]; then
      qm guest exec $i rm /usr/local/scripts/vhcached.txt
      qm guest exec $i /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
      qm guest exec $i curl https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh | sh
-     echo Rebooting $i
-     qm guest exec $i reboot now
      echo Configuring $i Network
      qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
-     sleep $sleep_time
+    done
+  #Sleeping to make sure installation script is completed
+  sleep 120
+  #Starting VMs after install script has run
+  for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
+    do
+    qm start $i
     done
 fi
 #--------------------------------------------------------------------------------------------------------------
@@ -58,15 +62,19 @@ fi
 if [[ $command == "config" ]]; then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
-     echo Configuring $i Network
-     qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
      echo Renaming $i to $vm_name-$i
      qm guest exec $i hostname $vm_name-$i
      qm guest exec $i rm /usr/local/scripts/vhcached.txt
      qm guest exec $i /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
      qm guest exec $i curl https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh | sh
-     echo Rebooting $i
-     qm guest exec $i reboot now
+     echo Configuring $i Network
+     qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
+    done
+  #Sleeping to make sure installation script is completed
+  sleep 120
+  for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
+    do
+    qm start $i
     done
 fi
 #--------------------------------------------------------------------------------------------------------------
