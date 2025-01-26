@@ -1,3 +1,4 @@
+--
 - name: Check if Enterprise repo exists
   become: true
   ansible.builtin.stat:
