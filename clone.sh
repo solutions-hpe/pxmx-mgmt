@@ -1,5 +1,5 @@
 #!/bin/bash
-#version=".02"
+#version=".03"
 #--------------------------------------------------------------------------------------------------------------
 #Variable Setup - Reading arguments passed to script
 command="$1"
@@ -14,7 +14,7 @@ tpl_id="$9"
 #--------------------------------------------------------------------------------------------------------------
 #Re-Create VMS - Delete, re-clone from template
 #Delete and Re-Create the VMs
-if [ $command == "re-create" ]; then
+if [[ $command == "re-create" ]]; then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo stopping $i
@@ -44,7 +44,7 @@ if [ $command == "re-create" ]; then
 fi
 #--------------------------------------------------------------------------------------------------------------
 #Delete Option - delete all the VMs and cleanup disks
-if [ $command == "delete" ]; then
+if [[ $command == "delete" ]]; then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo stopping $i
@@ -55,7 +55,7 @@ if [ $command == "delete" ]; then
 fi
 #--------------------------------------------------------------------------------------------------------------
 #Reconfigure VMs - reset the network interface settings, hostname, and clear out VH caches
-if [ $command == "config" ]; then
+if [[ $command == "config" ]]; then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo Configuring $i Network
