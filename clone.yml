@@ -1,5 +1,5 @@
 ---
-- name: Clone VM and rename
+- name: Clone Setup Script
   tasks:
     - name: Clone VMs
       ansible.builtin.shell: bash /etc/pve/scripts/clone.sh
