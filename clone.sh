@@ -36,7 +36,7 @@ if [[ $command == "re-create" ]]; then
      qm guest exec $i sudo mkdir /usr/local/scripts
      qm guest exec $i sudo chmod -R 777 /usr/local/scripts
      qm guest exec $i sudo wget https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh ~/install.sh
-     qm guest exec $i sudo mv /install.sh /usr/local/scripts/install.sh
+     qm guest exec $i sudo mv ./install.sh /usr/local/scripts/install.sh
      qm guest exec $i sudo bash /usr/local/scripts/install.sh --timeout 900
      qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
     done
@@ -72,7 +72,7 @@ if [[ $command == "config" ]]; then
      qm guest exec $i sudo mkdir /usr/local/scripts
      qm guest exec $i sudo chmod -R 777 /usr/local/scripts
      qm guest exec $i sudo wget https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh ~/install.sh
-     qm guest exec $i sudo mv /install.sh /usr/local/scripts/install.sh
+     qm guest exec $i sudo mv ./install.sh /usr/local/scripts/install.sh
      qm guest exec $i sudo bash /usr/local/scripts/install.sh --timeout 900
      qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
      echo Configuring $i Network
