@@ -1,5 +1,5 @@
 #!/bin/bash
-version=".09"
+version=".10"
 #--------------------------------------------------------------------------------------------------------------
 #Variable Setup - Reading arguments passed to script
 command="$1"
@@ -41,7 +41,7 @@ if [[ $command == "re-create" ]]; then
      qm guest exec $i sudo mv ./install.sh /usr/local/scripts/install.sh
      qm guest exec $i sudo bash /usr/local/scripts/install.sh --timeout 900
      qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
-     qm guest exec $i smbclient $smb_location -N -c 'lcd /usr/local/scripts/; cd $shr_location; prompt; mget $i.conf'
+     qm guest exec $i smbclient $smb_location -N -c 'lcd /usr/local/scripts/; cd '$shr_location'; prompt; mget '$i'.conf'
      qm guest exec $i mv /usr/local/scripts/$i.conf /usr/local/scripts/simulation.conf
      qm guest exec $i shutdown now
     done
