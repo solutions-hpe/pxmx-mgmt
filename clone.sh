@@ -1,5 +1,5 @@
 #!/bin/bash
-version=".06"
+version=".07"
 #--------------------------------------------------------------------------------------------------------------
 #Variable Setup - Reading arguments passed to script
 command="$1"
@@ -33,16 +33,18 @@ if [[ $command == "re-create" ]]; then
      echo Renaming $i to $vm_name-$i
      qm guest exec $i hostname $vm_name-$i
      qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
+     qm guest exec $i sudo mkdir /usr/local/scripts
      qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
-     qm guest exec $i sudo curl https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh | sh
-     echo Configuring $i Network
-     qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
+     qm guest exec $i sudo wget https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh /usr/local/scripts/install.sh
+     qm guest exec $i sudo bash /usr/local/scripts/install.sh
     done
   #Sleeping to make sure installation script is completed
   sleep 120
   #Starting VMs after install script has run
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
+    echo Configuring $i Network
+    qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
     qm start $i
     done
 fi
@@ -65,8 +67,10 @@ if [[ $command == "config" ]]; then
      echo Renaming $i to $vm_name-$i
      qm guest exec $i hostname $vm_name-$i
      qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
+     qm guest exec $i sudo mkdir /usr/local/scripts
      qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
-     qm guest exec $i sudo curl https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh | sh
+     qm guest exec $i sudo wget https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh /usr/local/scripts/install.sh
+     qm guest exec $i sudo bash /usr/local/scripts/install.sh
      echo Configuring $i Network
      qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
     done
