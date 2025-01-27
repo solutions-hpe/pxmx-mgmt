@@ -1,5 +1,5 @@
 #!/bin/bash
-version=".08"
+version=".09"
 #--------------------------------------------------------------------------------------------------------------
 #Variable Setup - Reading arguments passed to script
 command="$1"
