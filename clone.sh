@@ -38,12 +38,12 @@ if [[ $command == "re-create" ]]; then
      qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
      qm guest exec $i sudo mkdir /usr/local/scripts
      qm guest exec $i sudo chmod -R 777 /usr/local/scripts
+     qm guest exec $i smbclient //nas.orange-tme.com/scripts -N -c 'lcd /usr/local/scripts/; cd /SIM/CONFIG/; prompt off; mget '$i'.conf'
+     qm guest exec $i mv /usr/local/scripts/$i.conf /usr/local/scripts/simulation.conf
      qm guest exec $i sudo wget https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh ~/install.sh
      qm guest exec $i sudo mv ./install.sh /usr/local/scripts/install.sh
      qm guest exec $i sudo bash /usr/local/scripts/install.sh --timeout 900
      qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
-     qm guest exec $i smbclient $smb_location -N -c 'lcd /usr/local/scripts/; cd '$shr_location'; prompt; mget '$i'.conf'
-     qm guest exec $i mv /usr/local/scripts/$i.conf /usr/local/scripts/simulation.conf
      qm guest exec $i shutdown now
     done
   #Sleeping to make sure installation script is completed
