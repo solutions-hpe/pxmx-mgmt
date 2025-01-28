@@ -70,9 +70,6 @@ if [[ $command == "config" ]]; then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo Renaming $i to $vm_name-$i
-     qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=101
-     #Sleeping for 120 seconds for network to come up
-     sleep 120
      qm guest exec $i hostname $vm_name-$i
      qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
      qm guest exec $i sudo mkdir /usr/local/scripts
