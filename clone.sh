@@ -11,9 +11,6 @@ sleep_time="$6"
 pool_id="$7"
 vm_name="$8"
 tpl_id="$9"
-smb_location="$10"
-shr_location="$11"
-vlan_prov="$12"
 #--------------------------------------------------------------------------------------------------------------
 #Re-Create VMS - Delete, re-clone from template
 #Delete and Re-Create the VMs
@@ -73,19 +70,19 @@ if [[ $command == "config" ]]; then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo Renaming $i to $vm_name-$i
-     qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_prov
+     qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=101
      #Sleeping for 120 seconds for network to come up
      sleep 120
      qm guest exec $i hostname $vm_name-$i
      qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
      qm guest exec $i sudo mkdir /usr/local/scripts
      qm guest exec $i sudo chmod -R 777 /usr/local/scripts
+     qm guest exec $i smbclient //nas.orange-tme.com/scripts -N -c 'lcd /usr/local/scripts/; cd /SIM/CONFIG/; prompt off; mget '$i'.conf'
+     qm guest exec $i mv /usr/local/scripts/$i.conf /usr/local/scripts/simulation.conf
      qm guest exec $i sudo wget https://raw.githubusercontent.com/solutions-hpe/client-sim/main/install.sh ~/install.sh
      qm guest exec $i sudo mv ./install.sh /usr/local/scripts/install.sh
      qm guest exec $i sudo bash /usr/local/scripts/install.sh --timeout 900
      qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
-     qm guest exec $i smbclient $smb_location -N -c 'lcd /usr/local/scripts/; cd '$shr_location'; prompt; mget '$i'.conf'
-     qm guest exec $i mv /usr/local/scripts/$i.conf /usr/local/scripts/simulation.conf
      echo Configuring $i Network
      qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
     done
