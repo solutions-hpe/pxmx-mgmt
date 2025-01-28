@@ -84,7 +84,7 @@ if [[ $command == "config" ]]; then
      qm guest exec $i sudo mv ./install.sh /usr/local/scripts/install.sh
      qm guest exec $i sudo bash /usr/local/scripts/install.sh --timeout 900
      qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
-     qm guest exec $i smbclient $smb_location -N -c 'lcd /usr/local/scripts/; cd '$shr_location'; prompt; mget '$i'.conf'
+     qm guest exec $i smbclient \\$smb_location -N -c 'lcd /usr/local/scripts/; cd '$shr_location'; prompt; mget '$i'.conf'
      qm guest exec $i mv /usr/local/scripts/$i.conf /usr/local/scripts/simulation.conf
      echo Configuring $i Network
      qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
