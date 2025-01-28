@@ -74,6 +74,8 @@ if [[ $command == "config" ]]; then
     do
      echo Renaming $i to $vm_name-$i
      qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_prov
+     #Sleeping for 120 seconds for network to come up
+     sleep 120
      qm guest exec $i hostname $vm_name-$i
      qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
      qm guest exec $i sudo mkdir /usr/local/scripts
@@ -86,12 +88,6 @@ if [[ $command == "config" ]]; then
      qm guest exec $i mv /usr/local/scripts/$i.conf /usr/local/scripts/simulation.conf
      echo Configuring $i Network
      qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
-    done
-  #Sleeping to make sure installation script is completed
-  sleep 120
-  for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
-    do
-    qm start $i
     done
 fi
 #--------------------------------------------------------------------------------------------------------------
