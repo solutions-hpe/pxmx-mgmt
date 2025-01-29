@@ -31,7 +31,7 @@ if [[ $command == "re-create" ]]; then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo Renaming $i to $vm_name-$i
-     qm guest exec $i hostname $vm_name-$i
+     qm guest exec $i sudo hostname $vm_name-$i
      qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
      qm guest exec $i sudo mkdir /usr/local/scripts
      qm guest exec $i sudo chmod -R 777 /usr/local/scripts
