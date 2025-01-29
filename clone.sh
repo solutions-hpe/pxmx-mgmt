@@ -31,8 +31,7 @@ if [[ $command == "re-create" ]]; then
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      echo Renaming $i to $vm_name-$i
-     qm guest exec $i sudo hostname $vm_name-$i
-     qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
+          qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
      qm guest exec $i sudo mkdir /usr/local/scripts
      qm guest exec $i sudo chmod -R 777 /usr/local/scripts
      qm guest exec $i smbclient //nas.orange-tme.com/scripts -N -c 'lcd /usr/local/scripts/; cd /SIM/CONFIG/; prompt off; mget '$i'.conf'
@@ -41,6 +40,7 @@ if [[ $command == "re-create" ]]; then
      qm guest exec $i sudo mv ./install.sh /usr/local/scripts/install.sh
      qm guest exec $i sudo bash /usr/local/scripts/install.sh --timeout 900
      qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
+     qm guest exec $i sudo hostname $vm_name-$i
      qm guest exec $i shutdown now
     done
   #Sleeping to make sure installation script is completed
