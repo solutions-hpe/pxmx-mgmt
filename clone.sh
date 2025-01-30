@@ -28,6 +28,7 @@ if [[ $command == "re-create" ]]; then
      sleep $sleep_time
     done
   #Configuring VM Clones
+  sleep 30
   for (( i=$start_vmid ; i <= $end_vmid ; i++ ))
     do
      #qm guest exec $i sudo rm /usr/local/scripts/vhcached.txt
