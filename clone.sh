@@ -43,7 +43,7 @@ if [[ $command == "re-create" ]]; then
      #qm guest exec $i sudo bash /usr/local/scripts/install.sh --timeout 900
      #qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
      echo Renaming $i to $vm_name-$i
-     qm guest exec $i sudo hostname $vm_name-$i
+     qm guest exec $i sudo hostnamectl set-hostname $vm_name-$i
      qm guest exec $i shutdown now
     done
   #Sleeping to make sure installation script is completed
@@ -81,7 +81,7 @@ if [[ $command == "config" ]]; then
      #qm guest exec $i sudo /usr/sbin/vhclientx86_64 -t "STOP USING ALL LOCAL"
      #qm guest exec $i sudo mv /usr/local/scripts/$i.conf /usr/local/scripts/simulation.conf
      echo Renaming $i to $vm_name-$i
-     qm guest exec $i hostname $vm_name-$i
+     qm guest exec $i sudo hostnamectl set-hostname $vm_name-$i
      echo Configuring $i Network
      qm set $i --net0 model=virtio,bridge=$bridge_id,firewall=1,tag=$vlan_id
     done
